@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Asegúrate de importar Bootstrap
 import { Toast, ToastContainer } from 'react-bootstrap'; // Importa los componentes Toast y ToastContainer
-import SearchProducts from './SearchProducts'; // Importa el componente SearchProducts
+import SearchProducts from './SearchProducts'; 
+import ManageRoles from './ManageRoles';
+import RegisterUser from './RegisterUser';
 
 const ProductManager = () => {
     const [nombre, setNombre] = useState('');
@@ -125,11 +127,11 @@ const ProductManager = () => {
                     </form>
                 );
             case 'buscar':
-                return <SearchProducts />; // Aquí se renderiza el componente de búsqueda
+                return <SearchProducts />; 
             case 'roles':
-                return <h3>Gestión de Roles (Funcionalidad en desarrollo)</h3>;
+                return <ManageRoles />; // Renderiza el componente ManageRoles
             case 'registrar':
-                return <h3>Registrar Usuario (Funcionalidad en desarrollo)</h3>;
+                return <RegisterUser/>;
             default:
                 return null;
         }
@@ -166,3 +168,4 @@ const ProductManager = () => {
 };
 
 export default ProductManager;
+

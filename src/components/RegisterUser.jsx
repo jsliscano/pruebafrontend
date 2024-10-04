@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 const RegisterUser = () => {
   const [nombre, setNombre] = useState("");
@@ -8,9 +9,19 @@ const RegisterUser = () => {
   const [tipoIdentificacion, setTipoIdentificacion] = useState("DNI");
   const [cargoId, setCargoId] = useState("");
   const [edad, setEdad] = useState("");
+  const [message, setMessage] = useState(""); 
+  const [showToast, setShowToast] = useState(false); 
+  const [showModal, setShowModal] = useState(false); // Estado para el modal
 
-  const manejarEnvio = (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
+
+    // Validar campos vacíos
+    if (!nombre || !fechaIngreso || !numeroIdentificacion || !cargoId || !edad) {
+      setMessage('Por favor, completa todos los campos.');
+      setShowToast(true);
+      return;
+    }
 
     const datosUsuario = {
       nombre,
@@ -21,8 +32,21 @@ const RegisterUser = () => {
       edad,
     };
 
-    console.log("Usuario registrado:", datosUsuario);
-    
+    try {
+      const response = await axios.post('http://localhost:8083/api/user/create', datosUsuario);
+      if (response.status === 201) {
+        setMessage('Usuario registrado exitosamente');
+        setShowModal(true); // Muestra el modal de éxito
+      } else {
+        setMessage('Error al registrar el usuario');
+        setShowToast(true);
+      }
+    } catch (error) {
+      console.error('Error al registrar el usuario:', error);
+      setMessage('Error: ' + (error.response?.data?.message || 'No se pudo registrar el usuario'));
+      setShowToast(true);
+    }
+
     // Restablecer el formulario
     setNombre("");
     setFechaIngreso("");
@@ -30,6 +54,10 @@ const RegisterUser = () => {
     setTipoIdentificacion("DNI");
     setCargoId("");
     setEdad("");
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -45,7 +73,7 @@ const RegisterUser = () => {
                 id="nombre"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="form-control form-control-sm" // Tamaño más pequeño
+                className="form-control form-control-sm"
                 required
               />
             </div>
@@ -110,6 +138,35 @@ const RegisterUser = () => {
             </div>
             <button type="submit" className="btn btn-primary w-100">Registrar Usuario</button>
           </form>
+
+          {/* Mostrar mensaje de éxito o error */}
+          {showToast && (
+            <div className={`alert alert-${message.includes('Error') ? 'danger' : 'success'} mt-3`}>
+              {message}
+            </div>
+          )}
+
+          {/* Modal de éxito */}
+          {showModal && (
+            <div className="modal show" style={{ display: 'block', position: 'fixed', zIndex: 1050 }}>
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Registro Exitoso</h5>
+                    <button type="button" className="close" onClick={closeModal}>
+                      <span>&times;</span>
+                    </button>
+                  </div>
+                  <div className="modal-body">
+                    <p>{message}</p>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" onClick={closeModal}>Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

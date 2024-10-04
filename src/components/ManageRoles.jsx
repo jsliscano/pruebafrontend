@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 const UserActionComponent = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -19,8 +20,21 @@ const UserActionComponent = () => {
 
   const manejarAccion = () => {
     if (usuarioSeleccionado) {
-      console.log(`Acción realizada por: ${usuarioSeleccionado}`);
-      // Aquí puedes realizar la acción deseada
+      // Creamos el cuerpo del objeto RolRequestDto que se enviará al backend
+      const rolRequestDto = {
+        nombre: usuarioSeleccionado,  // Este será el nombre del rol (puedes modificarlo según tu necesidad)
+      };
+
+      // Hacemos una petición POST al endpoint del backend
+      axios.post('http://localhost:8083/api/rol/create', rolRequestDto)
+        .then((response) => {
+          console.log('Rol creado exitosamente:', response.data);
+          alert(`Acción realizada por: ${usuarioSeleccionado}`);
+        })
+        .catch((error) => {
+          console.error('Error al crear el rol:', error);
+          alert('Ocurrió un error al realizar la acción.');
+        });
     } else {
       alert("Por favor, selecciona un usuario.");
     }
