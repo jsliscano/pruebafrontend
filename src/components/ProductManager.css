@@ -1,0 +1,24 @@
+body {
+    background-color: #f8f9fa; /* Color de fondo */
+  }
+  
+  .table {
+    margin-top: 20px;
+  }
+  
+  .modal {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo del modal */
+  }
+  
+  .modal-content {
+    border-radius: 0.5rem; /* Bordes redondeados */
+  }
+  
+  h1, h2 {
+    color: #343a40; /* Color de los títulos */
+  }
+
+  .navbar {
+    justify-content: center; /* Centrar los elementos dentro de la barra de navegación */
+  }
+  

@@ -1,0 +1,30 @@
+
+.container {
+    background-color: #f8f9fa; /* Fondo claro para el contenedor */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  .table {
+    background-color: #ffffff; /* Fondo blanco para la tabla */
+    border-radius: 5px; /* Bordes redondeados */
+  }
+  
+  .table th {
+    background-color: #343a40; /* Color de fondo para los encabezados */
+    color: #ffffff; /* Color del texto de los encabezados */
+  }
+  
+  .table td {
+    vertical-align: middle; /* Alinear verticalmente el contenido de las celdas */
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f2f2f2; /* Color de fondo para filas impares */
+  }
+  
+  .table-striped tbody tr:hover {
+    background-color: #e2e6ea; /* Color de fondo al pasar el mouse sobre las filas */
+  }
+  
