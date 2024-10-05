@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import './RegisterUser.css'; // Asegúrate de crear este archivo CSS
 
 const RegisterUser = () => {
   const [nombre, setNombre] = useState("");
@@ -11,12 +12,11 @@ const RegisterUser = () => {
   const [edad, setEdad] = useState("");
   const [message, setMessage] = useState(""); 
   const [showToast, setShowToast] = useState(false); 
-  const [showModal, setShowModal] = useState(false); // Estado para el modal
+  const [showModal, setShowModal] = useState(false); 
 
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
-    // Validar campos vacíos
     if (!nombre || !fechaIngreso || !numeroIdentificacion || !cargoId || !edad) {
       setMessage('Por favor, completa todos los campos.');
       setShowToast(true);
@@ -36,7 +36,7 @@ const RegisterUser = () => {
       const response = await axios.post('http://localhost:8083/api/user/create', datosUsuario);
       if (response.status === 201) {
         setMessage('Usuario registrado exitosamente');
-        setShowModal(true); // Muestra el modal de éxito
+        setShowModal(true);
       } else {
         setMessage('Error al registrar el usuario');
         setShowToast(true);
@@ -65,7 +65,7 @@ const RegisterUser = () => {
       <div className="row justify-content-center">
         <div className="col-md-6">
           <form onSubmit={manejarEnvio} className="p-4 border rounded shadow bg-light">
-            <h4 className="text-center mb-4">Complete los datos del usuario</h4>
+            <h4 className="text-center mb-4 text-primary">Complete los datos del usuario</h4>
             <div className="mb-3">
               <label htmlFor="nombre" className="form-label">Nombre</label>
               <input
@@ -73,7 +73,7 @@ const RegisterUser = () => {
                 id="nombre"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="form-control form-control-sm"
+                className="form-control form-control-lg"
                 required
               />
             </div>
@@ -84,7 +84,7 @@ const RegisterUser = () => {
                 id="edad"
                 value={edad}
                 onChange={(e) => setEdad(e.target.value)}
-                className="form-control form-control-sm"
+                className="form-control form-control-lg"
                 required
               />
             </div>
@@ -95,7 +95,7 @@ const RegisterUser = () => {
                 id="numeroIdentificacion"
                 value={numeroIdentificacion}
                 onChange={(e) => setNumeroIdentificacion(e.target.value)}
-                className="form-control form-control-sm"
+                className="form-control form-control-lg"
                 required
               />
             </div>
@@ -105,7 +105,7 @@ const RegisterUser = () => {
                 id="tipoIdentificacion"
                 value={tipoIdentificacion}
                 onChange={(e) => setTipoIdentificacion(e.target.value)}
-                className="form-select form-select-sm"
+                className="form-select form-select-lg"
                 required
               >
                 <option value="DNI">DNI</option>
@@ -121,7 +121,7 @@ const RegisterUser = () => {
                 id="cargoId"
                 value={cargoId}
                 onChange={(e) => setCargoId(e.target.value)}
-                className="form-control form-control-sm"
+                className="form-control form-control-lg"
                 required
               />
             </div>
@@ -132,11 +132,11 @@ const RegisterUser = () => {
                 id="fechaIngreso"
                 value={fechaIngreso}
                 onChange={(e) => setFechaIngreso(e.target.value)}
-                className="form-control form-control-sm"
+                className="form-control form-control-lg"
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100">Registrar Usuario</button>
+            <button type="submit" className="btn btn-primary btn-lg w-100">Registrar Usuario</button>
           </form>
 
           {/* Mostrar mensaje de éxito o error */}
@@ -149,13 +149,11 @@ const RegisterUser = () => {
           {/* Modal de éxito */}
           {showModal && (
             <div className="modal show" style={{ display: 'block', position: 'fixed', zIndex: 1050 }}>
-              <div className="modal-dialog">
+              <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                   <div className="modal-header">
                     <h5 className="modal-title">Registro Exitoso</h5>
-                    <button type="button" className="close" onClick={closeModal}>
-                      <span>&times;</span>
-                    </button>
+                    <button type="button" className="btn-close" onClick={closeModal}></button>
                   </div>
                   <div className="modal-body">
                     <p>{message}</p>

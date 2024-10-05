@@ -1,65 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
-const UserActionComponent = () => {
-  const [usuarios, setUsuarios] = useState([]);
-  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState("");
-
-  // Simulación de una función para obtener usuarios de la base de datos
-  useEffect(() => {
-    // Aquí deberías hacer una llamada a tu API para obtener los usuarios
-    // Por ahora, simularemos con algunos datos
-    const usuariosDummy = [
-      { id: 1, nombre: 'Juan Pérez' },
-      { id: 2, nombre: 'Ana Gómez' },
-      { id: 3, nombre: 'Luis Rodríguez' },
-    ];
-    setUsuarios(usuariosDummy);
-  }, []);
+const RolCreationComponent = () => {
+  const [nombre, setNombre] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [mensajeTipo, setMensajeTipo] = useState(""); // "success", "danger", or "warning"
 
   const manejarAccion = () => {
-    if (usuarioSeleccionado) {
-      // Creamos el cuerpo del objeto RolRequestDto que se enviará al backend
-      const rolRequestDto = {
-        nombre: usuarioSeleccionado,  // Este será el nombre del rol (puedes modificarlo según tu necesidad)
-      };
+    if (nombre.trim() !== "") {
+      const rolRequestDto = { roleName: nombre };
 
-      // Hacemos una petición POST al endpoint del backend
       axios.post('http://localhost:8083/api/rol/create', rolRequestDto)
         .then((response) => {
           console.log('Rol creado exitosamente:', response.data);
-          alert(`Acción realizada por: ${usuarioSeleccionado}`);
+          setMensaje(`Rol "${nombre}" creado exitosamente.`);
+          setMensajeTipo("success");  // Mensaje de éxito
+          setNombre("");  // Resetea el campo de texto
         })
         .catch((error) => {
           console.error('Error al crear el rol:', error);
-          alert('Ocurrió un error al realizar la acción.');
+          setMensaje("Ocurrió un error al crear el rol.");
+          setMensajeTipo("danger");  // Mensaje de error
         });
     } else {
-      alert("Por favor, selecciona un usuario.");
+      setMensaje("Por favor, ingresa un nombre para el rol.");
+      setMensajeTipo("warning");  // Mensaje de advertencia
     }
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">Seleccione un Usuario</h2>
+    <div className="container mt-5" style={{ maxWidth: '400px', margin: 'auto' }}>
+      <h2 className="text-center mb-4">Crear un Nuevo Rol</h2>
+
+      {/* Mensaje de feedback */}
+      {mensaje && (
+        <div className={`alert alert-${mensajeTipo} text-center`} role="alert">
+          {mensaje}
+        </div>
+      )}
+
       <div className="mb-3">
-        <label htmlFor="usuario" className="form-label">Usuario:</label>
-        <select
-          id="usuario"
-          className="form-select"
-          value={usuarioSeleccionado}
-          onChange={(e) => setUsuarioSeleccionado(e.target.value)}
-        >
-          <option value="">Seleccione un usuario</option>
-          {usuarios.map(usuario => (
-            <option key={usuario.id} value={usuario.nombre}>{usuario.nombre}</option>
-          ))}
-        </select>
+        <label htmlFor="nombre" className="form-label">Nombre del Rol:</label>
+        <input
+          type="text"
+          id="nombre"
+          className="form-control"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          placeholder="Ingresa el nombre del rol"
+        />
       </div>
-      <button className="btn btn-primary" onClick={manejarAccion}>Realizar Acción</button>
+
+      {/* Botón centrado */}
+      <div className="text-center">
+        <button className="btn btn-primary" onClick={manejarAccion}>
+          Crear Rol
+        </button>
+      </div>
     </div>
   );
 };
 
-export default UserActionComponent;
+export default RolCreationComponent;

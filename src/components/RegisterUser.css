@@ -1,0 +1,30 @@
+.container {
+    background-color: #f8f9fa; /* Fondo más claro */
+    border-radius: 8px; /* Esquinas redondeadas */
+  }
+  
+  .alert {
+    transition: opacity 0.5s ease;
+  }
+  
+  .modal {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para el modal */
+  }
+  
+  .modal-content {
+    border-radius: 10px; /* Esquinas redondeadas en el modal */
+  }
+  
+  .modal-header {
+    border-bottom: none; /* Sin borde en la parte inferior */
+  }
+  
+  .modal-footer {
+    border-top: none; /* Sin borde en la parte superior */
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Color personalizado para el botón */
+    border: none; /* Sin borde */
+  }
+  

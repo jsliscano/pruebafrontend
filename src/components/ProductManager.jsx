@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Asegúrate de importar Bootstrap
-import { Toast, ToastContainer } from 'react-bootstrap'; // Importa los componentes Toast y ToastContainer
-import SearchProducts from './SearchProducts'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Toast, ToastContainer } from 'react-bootstrap';
+import SearchProducts from './SearchProducts';
 import ManageRoles from './ManageRoles';
 import RegisterUser from './RegisterUser';
 
@@ -12,7 +12,7 @@ const ProductManager = () => {
     const [fechaIngreso, setFechaIngreso] = useState('');
     const [userNameRegister, setUserNameRegister] = useState('');
     const [message, setMessage] = useState('');
-    const [showToast, setShowToast] = useState(false); // Estado para controlar si el toast está visible
+    const [showToast, setShowToast] = useState(false);
     const [submoduloActivo, setSubmoduloActivo] = useState('crear');
 
     const handleSubmit = async (e) => {
@@ -42,7 +42,7 @@ const ProductManager = () => {
                 setMessage('Error: ' + error.message);
             }
         }
-        setShowToast(true); // Muestra el toast
+        setShowToast(true);
     };
 
     const handleCancel = () => {
@@ -57,81 +57,74 @@ const ProductManager = () => {
         switch (submoduloActivo) {
             case 'crear':
                 return (
-                    <form onSubmit={handleSubmit} className="p-4 bg-light rounded shadow-sm">
-                        <div className="row mb-3">
-                            <div className="col-md-6 offset-md-3">
-                                <div className="form-group">
-                                    <label className="form-label">Nombre del Producto:</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={nombre}
-                                        onChange={(e) => setNombre(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                            </div>
+                    <div className="card mb-4 shadow-sm">
+                        <div className="card-header">
+                            <h5 className="mb-0">Crear Producto</h5>
                         </div>
+                        <div className="card-body">
+                            <form onSubmit={handleSubmit}>
+                                <div className="row">
+                                    <div className="col-md-6 mb-3">
+                                        <label className="form-label">Nombre del Producto:</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={nombre}
+                                            onChange={(e) => setNombre(e.target.value)}
+                                            required
+                                        />
+                                    </div>
 
-                        <div className="row mb-3">
-                            <div className="col-md-6 offset-md-3">
-                                <div className="form-group">
-                                    <label className="form-label">Cantidad:</label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        value={cantidad}
-                                        onChange={(e) => setCantidad(e.target.value)}
-                                        required
-                                    />
+                                    <div className="col-md-6 mb-3">
+                                        <label className="form-label">Cantidad:</label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            value={cantidad}
+                                            onChange={(e) => setCantidad(e.target.value)}
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="row mb-3">
-                            <div className="col-md-6 offset-md-3">
-                                <div className="form-group">
-                                    <label className="form-label">Fecha de Ingreso:</label>
-                                    <input
-                                        type="date"
-                                        className="form-control"
-                                        value={fechaIngreso}
-                                        onChange={(e) => setFechaIngreso(e.target.value)}
-                                        required
-                                    />
+                                <div className="row">
+                                    <div className="col-md-6 mb-3">
+                                        <label className="form-label">Fecha de Ingreso:</label>
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            value={fechaIngreso}
+                                            onChange={(e) => setFechaIngreso(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="col-md-6 mb-3">
+                                        <label className="form-label">Nombre de Usuario:</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={userNameRegister}
+                                            onChange={(e) => setUserNameRegister(e.target.value)}
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="row mb-3">
-                            <div className="col-md-6 offset-md-3">
-                                <div className="form-group">
-                                    <label className="form-label">Nombre de Usuario:</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={userNameRegister}
-                                        onChange={(e) => setUserNameRegister(e.target.value)}
-                                        required
-                                    />
+                                <div className="d-flex justify-content-between">
+                                    <button type="submit" className="btn btn-primary">Crear Producto</button>
+                                    <button type="button" className="btn btn-secondary" onClick={handleCancel}>Cancelar</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-
-                        <div className="row">
-                            <div className="col-md-6 offset-md-3 d-flex justify-content-between">
-                                <button type="submit" className="btn btn-primary">Crear Producto</button>
-                                <button type="button" className="btn btn-secondary" onClick={handleCancel}>Cancelar</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 );
             case 'buscar':
-                return <SearchProducts />; 
+                return <SearchProducts />;
             case 'roles':
-                return <ManageRoles />; // Renderiza el componente ManageRoles
+                return <ManageRoles />;
             case 'registrar':
-                return <RegisterUser/>;
+                return <RegisterUser />;
             default:
                 return null;
         }
@@ -139,7 +132,7 @@ const ProductManager = () => {
 
     return (
         <div className="container mt-5">
-            <h2 className="mb-4 text-center">Gestión de Productos</h2>
+            <h2 className="mb-4 text-center text-primary">Gestión de Productos</h2>
 
             {/* Barra de Navegación */}
             <nav className="nav nav-pills justify-content-center mb-4">
@@ -168,4 +161,3 @@ const ProductManager = () => {
 };
 
 export default ProductManager;
-
